@@ -1,4 +1,4 @@
-# Termux Installer 🔧
+# Termux_tools 🔧
 
 أداة لتثبيت أهم أدوات Termux بسهولة عبر قائمة تفاعلية.
 
