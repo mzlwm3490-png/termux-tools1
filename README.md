@@ -1,4 +1,4 @@
-# Termux_tools 🔧
+# Termux_tools1 🔧
 
 أداة لتثبيت أهم أدوات Termux بسهولة عبر قائمة تفاعلية.
 
@@ -11,5 +11,5 @@
 ```bash
 pkg install git -y
 git clone https://github.com/mzlwm3490-png/termux-installer
-cd termux-installer
-python instalpro.py
+cd termux-tools1 
+python tools1.py
