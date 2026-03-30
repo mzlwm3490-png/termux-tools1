@@ -10,6 +10,6 @@
 ## طريقة التثبيت
 ```bash
 pkg install git -y
-git clone https://github.com/mzlwm3490-png/termux-installer
+git clone https://github.com/mzlwm3490-png/termux-tools1.py
 cd termux-tools1 
 python tools1.py
