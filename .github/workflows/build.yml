@@ -1,3 +1,4 @@
+
 name: Build Python APK
 
 on:
@@ -8,9 +9,25 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Verify Build Configuration
+        run: |
+          echo "===== COMMIT BEING BUILT ====="
+          git log -1 --oneline
+
+          echo "===== BUILD SPEC LOCATION ====="
+          pwd
+          ls -l buildozer.spec
+
+          echo "===== ORIENTATION VALUE ====="
+          grep -n "^orientation" buildozer.spec
+
+          echo "===== GIT STATUS ====="
+          git status --short
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -48,14 +65,20 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
+
           SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
           SDKMANAGER="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+
           yes | "$SDKMANAGER" --licenses || true
+
           "$SDKMANAGER" "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
           BUILDOZER_SDK="$HOME/.buildozer/android/platform/android-sdk"
+
           mkdir -p "$(dirname "$BUILDOZER_SDK")"
           rm -rf "$BUILDOZER_SDK"
           ln -s "$SDK_ROOT" "$BUILDOZER_SDK"
+
           echo "ANDROIDSDK=$BUILDOZER_SDK" >> "$GITHUB_ENV"
           echo "ANDROID_SDK_ROOT=$BUILDOZER_SDK" >> "$GITHUB_ENV"
 
@@ -63,7 +86,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          
+
           rm -rf bin
           buildozer -v android debug
 
