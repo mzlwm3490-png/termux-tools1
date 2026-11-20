@@ -10,6 +10,7 @@ def initialize_android_permissions():
 
     available = [
         "POST_NOTIFICATIONS",
+        "RECORD_AUDIO",
     ]
     requested = [p for p in available if not check_permission(p)]
     if requested:
