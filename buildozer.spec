@@ -14,7 +14,7 @@ android.api = 33
 android.minapi = 24
 android.ndk = 28c
 android.archs = arm64-v8a,armeabi-v7a
-android.permissions = INTERNET,ACCESS_NETWORK_STATE,POST_NOTIFICATIONS,VIBRATE,WAKE_LOCK,RECORD_AUDIO,MODIFY_AUDIO_SETTINGS,FOREGROUND_SERVICE,FOREGROUND_SERVICE_DATA_SYNC
+android.permissions = INTERNET,ACCESS_NETWORK_STATE,POST_NOTIFICATIONS,VIBRATE,WAKE_LOCK,FOREGROUND_SERVICE,FOREGROUND_SERVICE_DATA_SYNC
 services = background:services/background_service.py:foreground:sticky:foregroundServiceType=dataSync
 
 [buildozer]

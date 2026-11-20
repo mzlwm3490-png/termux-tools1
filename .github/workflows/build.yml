@@ -64,14 +64,14 @@ jobs:
           mkdir -p "$SDK_ROOT/tools/bin"
           cat > "$SDK_ROOT/tools/bin/sdkmanager" <<EOF
           #!/usr/bin/env bash
-          exec "$SDKMANAGER" "$@"
+          exec "$SDKMANAGER" "\$@"
           EOF
           chmod +x "$SDK_ROOT/tools/bin/sdkmanager"
 
           if [ -x "$SDK_ROOT/cmdline-tools/latest/bin/avdmanager" ]; then
             cat > "$SDK_ROOT/tools/bin/avdmanager" <<EOF
           #!/usr/bin/env bash
-          exec "$SDK_ROOT/cmdline-tools/latest/bin/avdmanager" "$@"
+          exec "$SDK_ROOT/cmdline-tools/latest/bin/avdmanager" "\$@"
           EOF
             chmod +x "$SDK_ROOT/tools/bin/avdmanager"
           fi
