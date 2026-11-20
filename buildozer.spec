@@ -7,7 +7,7 @@ source.dir = .
 source.include_exts = py,html,css,js,json,txt,png,jpg,jpeg,kv,atlas,ttf,otf,whl
 icon.filename = icon/icon.png
 requirements = python3==3.11.9,hostpython3==3.11.9,kivy,requests==2.33.1
-orientation = portrait
+orientation = all
 fullscreen = 0
 p4a.branch = develop
 android.api = 33
