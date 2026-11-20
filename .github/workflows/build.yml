@@ -44,20 +44,49 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install buildozer==1.5.0 cython==0.29.34
 
-      - name: Setup Android SDK & Link
+      - name: Setup Android SDK and Buildozer compatibility
         shell: bash
         run: |
           set -euxo pipefail
           SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
           SDKMANAGER="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
-          yes | "$SDKMANAGER" --licenses || true
+
+          if [ ! -x "$SDKMANAGER" ]; then
+            echo "Android sdkmanager not found: $SDKMANAGER"
+            find /usr/local/lib/android /opt -path '*/cmdline-tools/*/bin/sdkmanager' -type f 2>/dev/null | head -20 || true
+            exit 1
+          fi
+
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
+          # Buildozer 1.5.0 probes the legacy tools/bin path.
+          mkdir -p "$SDK_ROOT/tools/bin"
+          cat > "$SDK_ROOT/tools/bin/sdkmanager" <<EOF
+          #!/usr/bin/env bash
+          exec "$SDKMANAGER" "$@"
+          EOF
+          chmod +x "$SDK_ROOT/tools/bin/sdkmanager"
+
+          if [ -x "$SDK_ROOT/cmdline-tools/latest/bin/avdmanager" ]; then
+            cat > "$SDK_ROOT/tools/bin/avdmanager" <<EOF
+          #!/usr/bin/env bash
+          exec "$SDK_ROOT/cmdline-tools/latest/bin/avdmanager" "$@"
+          EOF
+            chmod +x "$SDK_ROOT/tools/bin/avdmanager"
+          fi
+
           BUILDOZER_SDK="$HOME/.buildozer/android/platform/android-sdk"
           mkdir -p "$(dirname "$BUILDOZER_SDK")"
           rm -rf "$BUILDOZER_SDK"
           ln -s "$SDK_ROOT" "$BUILDOZER_SDK"
-          echo "ANDROIDSDK=$BUILDOZER_SDK" >> "$GITHUB_ENV"
-          echo "ANDROID_SDK_ROOT=$BUILDOZER_SDK" >> "$GITHUB_ENV"
+          {
+            echo "ANDROID_HOME=$BUILDOZER_SDK"
+            echo "ANDROIDSDK=$BUILDOZER_SDK"
+            echo "ANDROID_SDK_ROOT=$BUILDOZER_SDK"
+          } >> "$GITHUB_ENV"
+          test -x "$BUILDOZER_SDK/tools/bin/sdkmanager"
+          "$BUILDOZER_SDK/tools/bin/sdkmanager" --version
 
       - name: Build APK
         shell: bash
