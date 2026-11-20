@@ -1,0 +1,91 @@
+<Dd>:
+    orientation: 'vertical'
+    
+    canvas.before:
+    	Rectangle:
+    		pos: self.pos
+    		size: self.size
+    		source: 'app.jpg'
+    BoxLayout:
+   	 orientation: 'horizontal'
+    
+    # عنوان التطبيق داخل الشاشة ليظهر بوضوح على الهاتف
+    	Label:
+       	 text: 'Abo Mzlom'
+       	 font_size: 22
+      	  size_hint_y: None
+     	   height: '50dp'
+    	    bold: True
+    BoxLayout:
+    	orientation: 'horizontal'
+        
+    # قسم تسجيل الدخول
+    BoxLayout:
+        orientation: 'vertical'
+        
+        padding: 20
+        spacing: 10
+        #size_hint_y: None
+        height:'180dp'
+	
+        Label:
+            text: 'Enter login'
+            size_hint_y: None
+            height: '40dp'
+            
+        TextInput:
+            id : token_input
+            padding: 20
+            hint_text: 'Enter yuor token'
+            multiline: False
+            size_hint_y: None
+            size_hint_x: None
+            size_hint_x: 0.6
+            pos_hint: {'center_x': 0.5}
+            height: '40dp'
+            
+        TextInput:
+            id: chat_input
+            padding: 20
+            hint_text: 'Enter yuor chat id'
+            password: True
+            multiline: False
+            size_hint_y: None
+            size_hint_x: None
+            size_hint_x: 0.6
+            pos_hint: {'center_x': 0.5}
+            height: '40dp'
+            
+    # أزرار التحكم
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: '80dp'
+        spacing: 10
+        padding: 15
+        
+        Button:
+            text: 'Enter'
+            color: 0.3,0.6,2,1
+            size_hint_x: None
+            size_hint_x: 0.4
+            pos_hint: {'center_x': 0.5}
+            background_color: 0.3,0.6,2,1
+            on_press : root.send_msg()
+        Button:
+            text: 'exit'
+            size_hint_x: None
+            size_hint_x: 0.4
+            pos_hint: {'center_x': 0.5}
+            on_press : app.stop()
+    Widget:      
+    # حقوق النشر في الأسفل
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+     #   height: '540dp'
+        
+        Label:
+            text: 'Developer Abo Mzlom @2026'
+            font_size: 18
+	
