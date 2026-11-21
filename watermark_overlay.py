@@ -13,15 +13,17 @@ def attach_watermark(*args):
         return
     _watermark_attached = True
     try:
-        layer = FloatLayout(size_hint=(1, 1))
+        layer = FloatLayout(size_hint=(1, 1), pos=(0, 0))
         btn = Button(
             text="أبو مظلوم",
             size_hint=(None, None),
-            size=(150, 38),
-            pos_hint={"x": 0.02, "y": 0.015},
-            font_size="12sp",
-            background_color=(0.06, 0.09, 0.16, 0.85),
+            size=(dp(112), dp(28)),
+            pos_hint={"x": 0.01, "y": 0.01},
+            font_size="9sp",
+            background_normal="",
+            background_color=(0.06, 0.09, 0.16, 0.82),
             color=(1, 1, 1, 1),
+            padding=(6, 3),
         )
         def _show_ad(_instance):
             content = Label(text="تم بناء هذا التطبيق عبر منصة مدير البناء - تطوير محمد جميل سالم علي مجمل اللقب أبو مظلوم.", halign="center", valign="middle")
